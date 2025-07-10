@@ -2,8 +2,10 @@ import express from "express";
 import logger from "./middleware/logger.js";
 import router from "./routes/routes.js";
 import config from "./config/config.js";
+import connectDB from "./config/mongoose.js";
 
 const app = express();
+connectDB();
 
 app.use(express.json());
 app.use(logger);
