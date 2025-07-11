@@ -24,8 +24,14 @@ export async function login(req, res, next) {
   try {
     const { email, password } = req.body;
     const { user, token } = await loginUser({ email, password });
-    const { password: __removedPassword, __v, ...publicUserData } = user.toObject();
-    res.status(200).json({ message: "Login successful", user: publicUserData, token });
+    const {
+      password: __removedPassword,
+      __v,
+      ...publicUserData
+    } = user.toObject();
+    res
+      .status(200)
+      .json({ message: "Login successful", user: publicUserData, token });
   } catch (error) {
     next(error);
   }
