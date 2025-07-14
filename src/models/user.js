@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -21,8 +21,8 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) return next();
 
   try {
     const saltRounds = 10;
@@ -33,4 +33,4 @@ userSchema.pre("save", async function (next) {
   }
 });
 
-export default mongoose.model("User", userSchema);
+export default mongoose.model('User', userSchema);
