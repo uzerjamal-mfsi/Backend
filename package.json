@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@mindfiredigital/eslint-plugin-hub": "^2.1.1",
+    "eslint": "^9.31.0",
     "nodemon": "^3.1.10"
   }
 }

@@ -5,9 +5,13 @@ import connectDB from './config/mongoose.js';
 import { authRouter } from './routes/auth-routes.js';
 import { handleError } from './middleware/error-handler.js';
 import { dashboardRouter } from './routes/dashboard-routes.js';
+import loadExercisesIntoDatabase from '../scripts/bootstrap-exercises.js';
 
 const app = express();
-connectDB();
+connectDB().then(async () => {
+  // Bootstrap exercises
+  await loadExercisesIntoDatabase();
+});
 
 app.use(express.json());
 app.use(logger);
