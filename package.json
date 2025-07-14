@@ -15,6 +15,7 @@
     "mongoose": "^8.16.2"
   },
   "devDependencies": {
+    "@mindfiredigital/eslint-plugin-hub": "^2.1.1",
     "nodemon": "^3.1.10"
   }
 }
