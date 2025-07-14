@@ -6,18 +6,21 @@ import { authRouter } from './routes/auth-routes.js';
 import { handleError } from './middleware/error-handler.js';
 import { dashboardRouter } from './routes/dashboard-routes.js';
 import loadExercisesIntoDatabase from '../scripts/bootstrap-exercises.js';
+import cors from 'cors';
+import { workoutRouter } from './routes/workout-routes.js';
 
 const app = express();
 connectDB().then(async () => {
-  // Bootstrap exercises
   await loadExercisesIntoDatabase();
 });
 
 app.use(express.json());
 app.use(logger);
+app.use(cors());
 
 app.use('/auth', authRouter);
 app.use('/dashboard', dashboardRouter);
+app.use('/workouts', workoutRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Not Found' });
