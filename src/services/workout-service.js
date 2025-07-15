@@ -19,6 +19,7 @@ export const workoutList = async (userId, page = 1, limit = 10) => {
   const formattedWorkouts = workouts.map((workout) => ({
     id: workout._id,
     exerciseCount: workout.exercises.length,
+    note: workout.note,
     date: workout.date,
     totalCaloriesBurned: workout.totalCaloriesBurned,
   }));

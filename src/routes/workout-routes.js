@@ -9,6 +9,7 @@ import { idParamSchema, paginationSchema } from '../validators/common-validator.
 
 export const workoutRouter = express.Router();
 
+workoutRouter.get('/exercises', authenticateToken, getAllExercises);
 workoutRouter.post('/', authenticateToken, validate(workoutSchema), createWorkout);
 workoutRouter.get('/', authenticateToken, validate(paginationSchema, 'query'), getWorkouts);
 workoutRouter.get('/:id', authenticateToken, validate(idParamSchema, 'params'), getWorkoutById);
@@ -20,5 +21,3 @@ workoutRouter.put(
   updateWorkout,
 );
 workoutRouter.delete('/:id', authenticateToken, validate(idParamSchema, 'params'), deleteWorkout);
-
-workoutRouter.get('/exercises', authenticateToken, getAllExercises);
