@@ -2,7 +2,7 @@ import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
 
-export function authenticateToken(req, res, next) {
+function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) {
     return next(new createError.Unauthorized('Invalid Token'));
@@ -21,3 +21,5 @@ export function authenticateToken(req, res, next) {
     next();
   });
 }
+
+export default authenticateToken;

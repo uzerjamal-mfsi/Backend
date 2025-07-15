@@ -1,6 +1,7 @@
-function validate(schema) {
+function validate(schema, source = 'body') {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, { abortEarly: false });
+    const data = req[source];
+    const { error } = schema.validate(data, { abortEarly: false });
     if (error) {
       const err = new Error('ValidationError');
       err.statusCode = 400;
