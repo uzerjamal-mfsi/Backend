@@ -8,6 +8,7 @@ import { dashboardRouter } from './routes/dashboard-routes.js';
 import loadExercisesIntoDatabase from '../scripts/bootstrap-exercises.js';
 import cors from 'cors';
 import { workoutRouter } from './routes/workout-routes.js';
+import { goalRouter } from './routes/goal-routes.js';
 
 const app = express();
 connectDB().then(async () => {
@@ -21,6 +22,7 @@ app.use(cors());
 app.use('/auth', authRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/workouts', workoutRouter);
+app.use('/goals', goalRouter);
 
 app.use((req, res, next) => {
   res.status(404).json({ error: 'Not Found' });
