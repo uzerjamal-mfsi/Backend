@@ -3,6 +3,7 @@ import { deleteWorkoutById } from '../services/workout-service.js';
 import { getWorkoutDetail } from '../services/workout-service.js';
 import createError from 'http-errors';
 import { addWorkout, getExercises, workoutList } from '../services/workout-service.js';
+import { updateWorkoutGoals } from '../services/goal-events.js';
 
 export const getWorkoutById = async (req, res, next) => {
   try {
@@ -32,9 +33,10 @@ export const getWorkouts = async (req, res, next) => {
 export const createWorkout = async (req, res, next) => {
   try {
     const userId = req.user.id;
-    const { exercises, date, note } = req.body;
-    const workout = await addWorkout({ user: userId, exercises, date, note });
-    res.status(201).json({ workout });
+    const { exercises, date, note, duration } = req.body;
+    const workout = await addWorkout({ user: userId, exercises, date, note, duration });
+    const goal = await updateWorkoutGoals(userId);
+    res.status(201).json({ workout, goal });
   } catch (err) {
     next(err);
   }
@@ -65,8 +67,8 @@ export const updateWorkout = async (req, res, next) => {
   try {
     const userId = req.user.id;
     const { id } = req.params;
-    const { exercises, date, note } = req.body;
-    const updated = await updateWorkoutById(id, userId, { exercises, date, note });
+    const { exercises, date, note, duration } = req.body;
+    const updated = await updateWorkoutById(id, userId, { exercises, date, note, duration });
     if (!updated) return res.status(404).json({ error: 'Workout not found or not authorized' });
     res.json({ workout: updated });
   } catch (err) {

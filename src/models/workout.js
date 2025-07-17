@@ -1,4 +1,3 @@
-// models/Workout.js
 import mongoose from 'mongoose';
 
 const workoutSchema = new mongoose.Schema(
@@ -27,6 +26,7 @@ const workoutSchema = new mongoose.Schema(
       },
     ],
     totalCaloriesBurned: { type: Number, default: 0 },
+    duration: { type: Number, default: 0 },
   },
   { timestamps: true },
 );
