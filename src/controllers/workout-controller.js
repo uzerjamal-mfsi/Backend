@@ -3,6 +3,7 @@ import { deleteWorkoutById } from '../services/workout-service.js';
 import { getWorkoutDetail } from '../services/workout-service.js';
 import createError from 'http-errors';
 import { addWorkout, getExercises, workoutList } from '../services/workout-service.js';
+import { updateWorkoutGoals } from '../services/goal-events.js';
 
 export const getWorkoutById = async (req, res, next) => {
   try {
@@ -34,7 +35,8 @@ export const createWorkout = async (req, res, next) => {
     const userId = req.user.id;
     const { exercises, date, note } = req.body;
     const workout = await addWorkout({ user: userId, exercises, date, note });
-    res.status(201).json({ workout });
+    const goal = await updateWorkoutGoals(userId);
+    res.status(201).json({ workout, goal });
   } catch (err) {
     next(err);
   }

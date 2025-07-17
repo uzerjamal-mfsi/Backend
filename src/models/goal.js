@@ -23,6 +23,17 @@ const goalSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    progress: {
+      type: Number,
+      default: 0,
+    },
+    achieved: {
+      type: Boolean,
+      default: false,
+    },
+    achievedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,

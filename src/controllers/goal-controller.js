@@ -1,3 +1,4 @@
+import { updateWeightGoals } from '../services/goal-events.js';
 import { addGoal, addWeightEntry, goalsList } from '../services/goal-service.js';
 
 export const createGoal = async (req, res, next) => {
@@ -37,7 +38,8 @@ export const createWeightEntry = async (req, res, next) => {
       weight,
       date,
     });
-    res.status(201).json({ weightEntry });
+    const goalAchieved = await updateWeightGoals(userId, weight);
+    res.status(201).json({ weightEntry, goalAchieved });
   } catch (err) {
     next(err);
   }
