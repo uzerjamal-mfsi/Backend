@@ -15,4 +15,5 @@ export const workoutSchema = Joi.object({
     .required(),
   date: Joi.date().optional(),
   note: Joi.string().trim().optional(),
+  duration: Joi.number().integer().min(0).optional(),
 });

@@ -9,7 +9,7 @@ export const workoutList = async (userId, page = 1, limit = 10) => {
   const skip = (page - 1) * limit;
   const [workouts, total] = await Promise.all([
     Workout.find({ user: userId })
-      .select('exercises date note totalCaloriesBurned')
+      .select('exercises date note totalCaloriesBurned duration')
       .sort({ date: -1 })
       .skip(skip)
       .limit(limit),
@@ -21,6 +21,7 @@ export const workoutList = async (userId, page = 1, limit = 10) => {
     exerciseCount: workout.exercises.length,
     note: workout.note,
     date: workout.date,
+    duration: workout.duration,
     totalCaloriesBurned: workout.totalCaloriesBurned,
   }));
 
@@ -33,7 +34,7 @@ export const workoutList = async (userId, page = 1, limit = 10) => {
   };
 };
 
-export const addWorkout = async ({ user, exercises, date, note }) => {
+export const addWorkout = async ({ user, exercises, date, note, duration }) => {
   let totalCaloriesBurned = 0;
   if (Array.isArray(exercises)) {
     totalCaloriesBurned = exercises.reduce((sum, ex) => sum + (ex.caloriesBurned || 0), 0);
@@ -44,6 +45,7 @@ export const addWorkout = async ({ user, exercises, date, note }) => {
     date: date || undefined,
     totalCaloriesBurned,
     note,
+    duration: duration || 0,
   });
   await workout.save();
   return workout;
@@ -58,7 +60,7 @@ export const deleteWorkoutById = async (id, userId) => {
   return true;
 };
 
-export const updateWorkoutById = async (id, userId, { exercises, date, note }) => {
+export const updateWorkoutById = async (id, userId, { exercises, date, note, duration }) => {
   let totalCaloriesBurned = 0;
   if (Array.isArray(exercises)) {
     totalCaloriesBurned = exercises.reduce((sum, ex) => sum + (ex.caloriesBurned || 0), 0);
@@ -70,6 +72,7 @@ export const updateWorkoutById = async (id, userId, { exercises, date, note }) =
       date: date || undefined,
       note,
       totalCaloriesBurned,
+      duration: duration || 0,
     },
     { new: true },
   ).populate('exercises.exercise');
