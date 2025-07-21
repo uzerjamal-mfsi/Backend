@@ -1,5 +1,6 @@
-import Workout from '../models/workout';
-import Exercise from '../models/exercise';
+import Workout, { WorkoutDocument } from '../models/workout';
+import Exercise, { ExerciseDocument } from '../models/exercise';
+import type { IAddWorkout, IUpdateWorkout } from '../types/workout-types';
 
 export const getWorkoutDetail = async (id: string) => {
   return Workout.findById(id).populate('exercises.exercise');
@@ -40,13 +41,7 @@ export async function addWorkout({
   date,
   note,
   duration,
-}: {
-  user: string;
-  exercises: any;
-  date: Date;
-  note: any;
-  duration: number;
-}) {
+}: IAddWorkout): Promise<WorkoutDocument> {
   let totalCaloriesBurned = 0;
   if (Array.isArray(exercises)) {
     totalCaloriesBurned = exercises.reduce((sum, ex) => sum + (ex.caloriesBurned || 0), 0);
@@ -59,29 +54,22 @@ export async function addWorkout({
     note,
     duration: duration || 0,
   });
-  await workout.save();
-  return workout;
+  return await workout.save();
 }
 
-export async function getExercises() {
+export async function getExercises(): Promise<ExerciseDocument[]> {
   return Exercise.find({});
 }
 
 export async function deleteWorkoutById(id: string, userId: string) {
-  await Workout.deleteOne({ _id: id, user: userId });
-  return true;
+  return await Workout.deleteOne({ _id: id, user: userId });
 }
 
 export async function updateWorkoutById(
   id: string,
   userId: string,
-  {
-    exercises,
-    date,
-    note,
-    duration,
-  }: { exercises: any; date: string; note: string; duration: number },
-) {
+  { exercises, date, note, duration }: IUpdateWorkout,
+): Promise<WorkoutDocument | null> {
   let totalCaloriesBurned = 0;
   if (Array.isArray(exercises)) {
     totalCaloriesBurned = exercises.reduce((sum, ex) => sum + (ex.caloriesBurned || 0), 0);

@@ -3,16 +3,9 @@ import User from '../models/user';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import config from '../config/config';
+import { IAuthUser, ICreateUser } from '../types/auth-types';
 
-export async function createUser({
-  name,
-  email,
-  password,
-}: {
-  name: string;
-  email: string;
-  password: string;
-}) {
+export async function createUser({ name, email, password }: ICreateUser) {
   const existingUser = await User.findOne({ email });
   if (existingUser) {
     throw new createError.Conflict(`User with email ${email} already exists`);
@@ -22,7 +15,7 @@ export async function createUser({
   return user;
 }
 
-export async function authenticateUser({ email, password }: { email: string; password: string }) {
+export async function authenticateUser({ email, password }: IAuthUser) {
   const user = await User.findOne({ email });
   if (!user) {
     throw new createError.Unauthorized('Invalid email or password');

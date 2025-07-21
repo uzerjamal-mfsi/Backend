@@ -88,7 +88,7 @@ export async function getWeightAnalytics(userId: string) {
     .select({ date: 1, weight: 1, _id: 0 });
 
   const formatted = result.map((entry) => ({
-    date: entry.date.toISOString().split('T')[0],
+    date: entry.date ? entry.date.toISOString().split('T')[0] : undefined,
     value: entry.weight,
   }));
   return formatted;

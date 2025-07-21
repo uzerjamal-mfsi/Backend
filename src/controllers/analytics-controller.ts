@@ -5,8 +5,13 @@ import {
   getWeightAnalytics,
 } from '../services/analytics-service';
 import { Response, NextFunction } from 'express';
+import { AuthenticatedRequest } from '../types/auth-types';
 
-export async function getWeeklyCalories(req: any, res: Response, next: NextFunction) {
+export async function getWeeklyCalories(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.user.id;
     const analytics = await getCaloriesAnalytics(userId);
@@ -16,7 +21,11 @@ export async function getWeeklyCalories(req: any, res: Response, next: NextFunct
   }
 }
 
-export async function getWeeklyAverageWorkoutDuration(req: any, res: Response, next: NextFunction) {
+export async function getWeeklyAverageWorkoutDuration(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.user.id;
     const analytics = await getDurationAnalytics(userId);
@@ -26,7 +35,11 @@ export async function getWeeklyAverageWorkoutDuration(req: any, res: Response, n
   }
 }
 
-export async function getWeeklyFrequency(req: any, res: Response, next: NextFunction) {
+export async function getWeeklyFrequency(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.user.id;
     const analytics = await getFrequencyAnalytics(userId);
@@ -36,7 +49,11 @@ export async function getWeeklyFrequency(req: any, res: Response, next: NextFunc
   }
 }
 
-export async function getWeeklyWeightMeasurements(req: any, res: Response, next: NextFunction) {
+export async function getWeeklyWeightMeasurements(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.user.id;
     const analytics = await getWeightAnalytics(userId);

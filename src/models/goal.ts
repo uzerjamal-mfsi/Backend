@@ -1,4 +1,19 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+
+export type GoalType = 'workout_per_week' | 'weight_target';
+
+export interface IGoal {
+  user: mongoose.Types.ObjectId;
+  type: GoalType;
+  target: number;
+  endDate?: Date;
+  note?: string;
+  progress?: number;
+  achieved?: boolean;
+  achievedAt?: Date;
+}
+
+export interface GoalDocument extends IGoal, Document {}
 
 const goalSchema = new mongoose.Schema(
   {
@@ -40,4 +55,6 @@ const goalSchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model('Goal', goalSchema);
+const Goal: Model<GoalDocument> = mongoose.model<GoalDocument>('Goal', goalSchema);
+
+export default Goal;

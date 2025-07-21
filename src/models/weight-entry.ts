@@ -1,4 +1,12 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
+
+export interface IWeightEntry {
+  user: mongoose.Types.ObjectId;
+  weight: number;
+  date?: Date;
+}
+
+export interface WeightEntryDocument extends IWeightEntry, Document {}
 
 const weightEntrySchema = new mongoose.Schema(
   {
@@ -21,4 +29,9 @@ const weightEntrySchema = new mongoose.Schema(
   },
 );
 
-export default mongoose.model('WeightEntry', weightEntrySchema);
+const WeightEntry: Model<WeightEntryDocument> = mongoose.model<WeightEntryDocument>(
+  'WeightEntry',
+  weightEntrySchema,
+);
+
+export default WeightEntry;

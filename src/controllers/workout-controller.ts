@@ -5,12 +5,13 @@ import {
   addWorkout,
   getExercises,
   workoutList,
-} from '../services/workout-service.js';
+} from '../services/workout-service';
 import createError from 'http-errors';
-import { updateWorkoutGoals } from '../services/goal-events.js';
+import { updateWorkoutGoals } from '../services/goal-events';
 import { Response, NextFunction } from 'express';
+import { AuthenticatedRequest } from '../types/auth-types';
 
-export async function getWorkoutById(req: any, res: Response, next: NextFunction) {
+export async function getWorkoutById(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const { id } = req.params;
     const workout = await getWorkoutDetail(id);
@@ -24,7 +25,7 @@ export async function getWorkoutById(req: any, res: Response, next: NextFunction
   }
 }
 
-export async function getWorkouts(req: any, res: Response, next: NextFunction) {
+export async function getWorkouts(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { page = 1, limit = 10 } = req.query;
@@ -35,7 +36,7 @@ export async function getWorkouts(req: any, res: Response, next: NextFunction) {
   }
 }
 
-export async function createWorkout(req: any, res: Response, next: NextFunction) {
+export async function createWorkout(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { exercises, date, note, duration } = req.body;
@@ -47,7 +48,11 @@ export async function createWorkout(req: any, res: Response, next: NextFunction)
   }
 }
 
-export async function getAllExercises(req: any, res: Response, next: NextFunction) {
+export async function getAllExercises(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const exercises = await getExercises();
     res.json({ exercises });
@@ -56,7 +61,7 @@ export async function getAllExercises(req: any, res: Response, next: NextFunctio
   }
 }
 
-export async function deleteWorkout(req: any, res: Response, next: NextFunction) {
+export async function deleteWorkout(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { id } = req.params;
@@ -68,7 +73,7 @@ export async function deleteWorkout(req: any, res: Response, next: NextFunction)
   }
 }
 
-export async function updateWorkout(req: any, res: Response, next: NextFunction) {
+export async function updateWorkout(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { id } = req.params;

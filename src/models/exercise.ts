@@ -1,6 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
-const exerciseSchema = new mongoose.Schema({
+export interface IExercise {
+  name: string;
+  muscleGroup: string;
+}
+
+export interface ExerciseDocument extends IExercise, Document {}
+
+const exerciseSchema = new mongoose.Schema<ExerciseDocument>({
   name: {
     type: String,
     required: true,
@@ -11,4 +18,9 @@ const exerciseSchema = new mongoose.Schema({
   },
 });
 
-export default mongoose.model('Exercise', exerciseSchema);
+const Exercise: Model<ExerciseDocument> = mongoose.model<ExerciseDocument>(
+  'Exercise',
+  exerciseSchema,
+);
+
+export default Exercise;

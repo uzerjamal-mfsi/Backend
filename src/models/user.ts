@@ -1,5 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import bcrypt from 'bcrypt';
+
+export interface IUser {
+  name: string;
+  email: string;
+  password: string;
+  createdAt?: Date;
+}
+
+export interface UserDocument extends IUser, Document {
+  isModified(field: string): boolean;
+}
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -33,4 +44,5 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-export default mongoose.model('User', userSchema);
+const User: Model<UserDocument> = mongoose.model<UserDocument>('User', userSchema);
+export default User;

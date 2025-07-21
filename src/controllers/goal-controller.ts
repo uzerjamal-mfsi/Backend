@@ -1,8 +1,9 @@
 import { updateWeightGoals } from '../services/goal-events.js';
 import { addGoal, addWeightEntry, goalsList } from '../services/goal-service.js';
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
+import { AuthenticatedRequest } from '../types/auth-types.js';
 
-export const createGoal = async (req: any, res: Response, next: NextFunction) => {
+export async function createGoal(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { type, target, endDate, note } = req.body;
@@ -17,20 +18,24 @@ export const createGoal = async (req: any, res: Response, next: NextFunction) =>
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const getGoalsList = async (req: any, res: Response, next: NextFunction) => {
+export async function getGoalsList(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
     const { page = 1, limit = 10 } = req.query;
     const userId = req.user.id;
-    const goals = await goalsList(userId, page, limit);
+    const goals = await goalsList(userId, Number(page), Number(limit));
     res.status(200).json({ goals });
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const createWeightEntry = async (req: any, res: Response, next: NextFunction) => {
+export async function createWeightEntry(
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.user.id;
     const { weight, date } = req.body;
@@ -44,4 +49,4 @@ export const createWeightEntry = async (req: any, res: Response, next: NextFunct
   } catch (err) {
     next(err);
   }
-};
+}

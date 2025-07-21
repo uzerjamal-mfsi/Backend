@@ -1,6 +1,25 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
-const workoutSchema = new mongoose.Schema(
+export interface IWorkoutExercise {
+  exercise: mongoose.Types.ObjectId;
+  sets?: number;
+  reps?: number;
+  weight?: number;
+  caloriesBurned?: number;
+}
+
+export interface IWorkout {
+  date?: Date;
+  user: mongoose.Types.ObjectId;
+  note?: string;
+  exercises: IWorkoutExercise[];
+  totalCaloriesBurned?: number;
+  duration?: number;
+}
+
+export interface WorkoutDocument extends IWorkout, Document {}
+
+const workoutSchema = new mongoose.Schema<WorkoutDocument>(
   {
     date: {
       type: Date,
@@ -31,4 +50,5 @@ const workoutSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-export default mongoose.model('Workout', workoutSchema);
+const Workout: Model<WorkoutDocument> = mongoose.model<WorkoutDocument>('Workout', workoutSchema);
+export default Workout;

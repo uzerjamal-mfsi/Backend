@@ -1,19 +1,14 @@
-import Goal from '../models/goal';
-import WeightEntry from '../models/weight-entry';
+import Goal, { GoalDocument } from '../models/goal';
+import WeightEntry, { WeightEntryDocument } from '../models/weight-entry';
+import { IAddGoal, IAddWeightEntry } from '../types/goal-types';
 
-export const addGoal = async ({
+export async function addGoal({
   userId,
   type,
   target,
   endDate,
   note,
-}: {
-  userId: string;
-  type: string;
-  target: number;
-  endDate: string;
-  note: string;
-}) => {
+}: IAddGoal): Promise<GoalDocument> {
   const goal = new Goal({
     user: userId,
     type,
@@ -23,27 +18,22 @@ export const addGoal = async ({
   });
   await goal.save();
   return goal;
-};
+}
 
-export const addWeightEntry = async ({
+export async function addWeightEntry({
   userId,
   weight,
   date,
-}: {
-  userId: string;
-  weight: number;
-  date: string;
-}) => {
+}: IAddWeightEntry): Promise<WeightEntryDocument> {
   const weightEntry = new WeightEntry({
     user: userId,
     weight,
     date: date || new Date(),
   });
-  await weightEntry.save();
-  return weightEntry;
-};
+  return await weightEntry.save();
+}
 
-export const goalsList = async (userId: string, page = 1, limit = 10) => {
+export async function goalsList(userId: string, page = 1, limit = 10) {
   const skip = (page - 1) * limit;
   const [goals, total] = await Promise.all([
     Goal.find({ user: userId })
@@ -72,4 +62,4 @@ export const goalsList = async (userId: string, page = 1, limit = 10) => {
     totalPages: Math.ceil(total / limit),
     totalGoals: total,
   };
-};
+}
