@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import Workout from '../models/workout.js';
-import WeightEntry from '../models/weight-entry.js';
+import Workout from '../models/workout';
+import WeightEntry from '../models/weight-entry';
 
 export async function getCaloriesAnalytics(userId: string) {
   const result = await Workout.aggregate([

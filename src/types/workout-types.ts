@@ -2,7 +2,7 @@ export interface IAddWorkout {
   user: string;
   exercises: any;
   date: Date;
-  note: any;
+  note: string;
   duration: number;
 }
 

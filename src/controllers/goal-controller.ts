@@ -1,7 +1,7 @@
-import { updateWeightGoals } from '../services/goal-events.js';
-import { addGoal, addWeightEntry, goalsList } from '../services/goal-service.js';
+import { updateWeightGoals } from '../services/goal-events';
+import { addGoal, addWeightEntry, goalsList } from '../services/goal-service';
 import { Response, NextFunction } from 'express';
-import { AuthenticatedRequest } from '../types/auth-types.js';
+import { AuthenticatedRequest } from '../types/auth-types';
 
 export async function createGoal(req: AuthenticatedRequest, res: Response, next: NextFunction) {
   try {
