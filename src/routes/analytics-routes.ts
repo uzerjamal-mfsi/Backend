@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import authenticateToken from '../middleware/authenticate.js';
+import authenticateToken from '../middleware/authenticate';
 import {
   getWeeklyAverageWorkoutDuration,
   getWeeklyCalories,

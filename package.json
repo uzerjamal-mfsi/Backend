@@ -4,7 +4,6 @@
     "dev": "nodemon src/app.js",
     "build": "tsc"
   },
-  "type": "module",
   "dependencies": {
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
@@ -18,7 +17,10 @@
   },
   "devDependencies": {
     "@mindfiredigital/eslint-plugin-hub": "^2.1.1",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.0.15",
     "@typescript-eslint/parser": "^8.37.0",
     "eslint": "^9.31.0",

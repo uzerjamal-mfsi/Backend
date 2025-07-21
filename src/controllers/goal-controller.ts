@@ -1,7 +1,8 @@
 import { updateWeightGoals } from '../services/goal-events.js';
 import { addGoal, addWeightEntry, goalsList } from '../services/goal-service.js';
+import { Request, Response, NextFunction } from 'express';
 
-export const createGoal = async (req, res, next) => {
+export const createGoal = async (req: any, res: Response, next: NextFunction) => {
   try {
     const userId = req.user.id;
     const { type, target, endDate, note } = req.body;
@@ -18,7 +19,7 @@ export const createGoal = async (req, res, next) => {
   }
 };
 
-export const getGoalsList = async (req, res, next) => {
+export const getGoalsList = async (req: any, res: Response, next: NextFunction) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const userId = req.user.id;
@@ -29,7 +30,7 @@ export const getGoalsList = async (req, res, next) => {
   }
 };
 
-export const createWeightEntry = async (req, res, next) => {
+export const createWeightEntry = async (req: any, res: Response, next: NextFunction) => {
   try {
     const userId = req.user.id;
     const { weight, date } = req.body;

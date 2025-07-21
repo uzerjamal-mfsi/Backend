@@ -1,8 +1,8 @@
-import Goal from '../models/goal.js';
-import Workout from '../models/workout.js';
+import Goal from '../models/goal';
+import Workout from '../models/workout';
 import { startOfWeek, endOfWeek } from 'date-fns';
 
-export const updateWorkoutGoals = async (userId) => {
+export async function updateWorkoutGoals(userId: string) {
   const now = new Date();
   const weekStart = startOfWeek(now, { weekStartsOn: 1 });
   const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
@@ -26,9 +26,9 @@ export const updateWorkoutGoals = async (userId) => {
   }
   await Goal.bulkSave(goals);
   return { achieved: goalAchieved, progress: workoutCount, target: shortestGoal };
-};
+}
 
-export const updateWeightGoals = async (userId, currentWeight) => {
+export async function updateWeightGoals(userId: string, currentWeight: number) {
   const now = new Date();
   let goalAchieved = false;
 
@@ -48,4 +48,4 @@ export const updateWeightGoals = async (userId, currentWeight) => {
   }
   await Goal.bulkSave(goals);
   return goalAchieved;
-};
+}

@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import Workout from '../models/workout.js';
 import WeightEntry from '../models/weight-entry.js';
 
-export async function getCaloriesAnalytics(userId) {
+export async function getCaloriesAnalytics(userId: string) {
   const result = await Workout.aggregate([
     { $match: { user: mongoose.Types.ObjectId.createFromHexString(userId) } },
     {
@@ -24,7 +24,7 @@ export async function getCaloriesAnalytics(userId) {
   return result;
 }
 
-export async function getDurationAnalytics(userId) {
+export async function getDurationAnalytics(userId: string) {
   const result = await Workout.aggregate([
     { $match: { user: mongoose.Types.ObjectId.createFromHexString(userId) } },
     {
@@ -60,7 +60,7 @@ export async function getDurationAnalytics(userId) {
   return result;
 }
 
-export async function getFrequencyAnalytics(userId) {
+export async function getFrequencyAnalytics(userId: string) {
   const result = await Workout.aggregate([
     { $match: { user: mongoose.Types.ObjectId.createFromHexString(userId) } },
     {
@@ -82,7 +82,7 @@ export async function getFrequencyAnalytics(userId) {
   return result;
 }
 
-export async function getWeightAnalytics(userId) {
+export async function getWeightAnalytics(userId: string) {
   const result = await WeightEntry.find({ user: userId })
     .sort({ date: 1 })
     .select({ date: 1, weight: 1, _id: 0 });

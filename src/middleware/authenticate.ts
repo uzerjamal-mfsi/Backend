@@ -1,8 +1,9 @@
 import createError from 'http-errors';
 import jwt from 'jsonwebtoken';
-import config from '../config/config.js';
+import config from '../config/config';
+import { Response, NextFunction } from 'express';
 
-function authenticateToken(req, res, next) {
+function authenticateToken(req: any, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) {
     return next(new createError.Unauthorized('Invalid Token'));
@@ -13,7 +14,11 @@ function authenticateToken(req, res, next) {
     return next(new createError.Unauthorized('Invalid Token'));
   }
 
-  jwt.verify(token, config.jwtSecret, (err, user) => {
+  const jwtSecret = config.jwtSecret;
+  if (!jwtSecret) {
+    throw new Error('JWT secret is not defined');
+  }
+  jwt.verify(token, jwtSecret, (err: any, user: any) => {
     if (err) {
       return next(new createError.Forbidden('Invalid token'));
     }

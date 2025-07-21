@@ -1,11 +1,16 @@
-import { updateWorkoutById } from '../services/workout-service.js';
-import { deleteWorkoutById } from '../services/workout-service.js';
-import { getWorkoutDetail } from '../services/workout-service.js';
+import {
+  updateWorkoutById,
+  deleteWorkoutById,
+  getWorkoutDetail,
+  addWorkout,
+  getExercises,
+  workoutList,
+} from '../services/workout-service.js';
 import createError from 'http-errors';
-import { addWorkout, getExercises, workoutList } from '../services/workout-service.js';
 import { updateWorkoutGoals } from '../services/goal-events.js';
+import { Response, NextFunction } from 'express';
 
-export const getWorkoutById = async (req, res, next) => {
+export async function getWorkoutById(req: any, res: Response, next: NextFunction) {
   try {
     const { id } = req.params;
     const workout = await getWorkoutDetail(id);
@@ -17,9 +22,9 @@ export const getWorkoutById = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const getWorkouts = async (req, res, next) => {
+export async function getWorkouts(req: any, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { page = 1, limit = 10 } = req.query;
@@ -28,9 +33,9 @@ export const getWorkouts = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const createWorkout = async (req, res, next) => {
+export async function createWorkout(req: any, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { exercises, date, note, duration } = req.body;
@@ -40,18 +45,18 @@ export const createWorkout = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const getAllExercises = async (req, res, next) => {
+export async function getAllExercises(req: any, res: Response, next: NextFunction) {
   try {
     const exercises = await getExercises();
     res.json({ exercises });
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const deleteWorkout = async (req, res, next) => {
+export async function deleteWorkout(req: any, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { id } = req.params;
@@ -61,9 +66,9 @@ export const deleteWorkout = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}
 
-export const updateWorkout = async (req, res, next) => {
+export async function updateWorkout(req: any, res: Response, next: NextFunction) {
   try {
     const userId = req.user.id;
     const { id } = req.params;
@@ -74,4 +79,4 @@ export const updateWorkout = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};
+}

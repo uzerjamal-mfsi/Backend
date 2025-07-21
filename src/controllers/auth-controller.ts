@@ -1,6 +1,7 @@
-import { createUser, authenticateUser } from '../services/auth-service.js';
+import { Request, Response, NextFunction } from 'express';
+import { createUser, authenticateUser } from '../services/auth-service';
 
-export async function register(req, res, next) {
+export async function register(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { name, email, password } = req.body;
 
@@ -14,7 +15,7 @@ export async function register(req, res, next) {
   }
 }
 
-export async function handleLogin(req, res, next) {
+export async function handleLogin(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     const { email, password } = req.body;
     const { user, token } = await authenticateUser({ email, password });
